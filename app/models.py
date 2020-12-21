@@ -21,7 +21,6 @@ def summarize_text(text):
     pass
 
 
-
 def extract_entities(text):
     entities_nr = len(text.ents)
     print(entities_nr, "Entities in diesem Text.")
@@ -35,8 +34,13 @@ def extract_entities(text):
     entities_list = [(X.text, X.label_) for X in text.ents]
     print("Entities im Text:\n", entities_list)
 
+def get_lexical_richness(text):
+    lex_rich = round(len(set(text))/len(text), 3)
+    print("Lexikalische:", lex_rich)
+
 
 if __name__ == "__main__":
     input_text = preprocess_text("app/texts/example1.txt")
     analyse_sentiment(input_text)
     extract_entities(input_text)
+    get_lexical_richness(input_text)
