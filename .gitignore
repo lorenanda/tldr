@@ -127,3 +127,4 @@ dmypy.json
 *.ipynb
 SentiWS_v2.0/
 .vscode/
+.pytest_cache/
