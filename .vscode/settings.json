@@ -1,5 +1,7 @@
 {
-    "python.pythonPath": "/home/lorena/anaconda3/bin/python",
+    "python.pythonPath": "/home/lorena/Documents/tldr/text_env/bin/python3.8",
     "python.linting.pylintEnabled": true,
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    "python.linting.lintOnSave": true,
+    "python.linting.flake8Enabled": true,
 }

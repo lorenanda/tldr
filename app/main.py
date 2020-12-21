@@ -3,8 +3,8 @@ import nltk
 import heapq
 import spacy
 from collections import Counter
+# python -m spacy download de_core_news_sm
 import de_core_news_sm
-
 from textblob_de import TextBlobDE
 
 nlp_de = de_core_news_sm.load()
@@ -82,5 +82,5 @@ if __name__ == "__main__":
     input_text = preprocess_text("app/texts/example1.txt")
     analyse_sentiment(input_text)
     extract_entities(input_text)
-    get_lexical_richness(input_text)
+    # get_lexical_richness(input_text)
     summarize_text(input_text)
