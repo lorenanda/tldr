@@ -5,6 +5,7 @@ from textblob_de import TextBlobDE
 
 nlp_de = de_core_news_sm.load()
 
+
 def preprocess_text(txt):
     f = open(txt, "r")
     f_read = f.read()
