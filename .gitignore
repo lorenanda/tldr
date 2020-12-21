@@ -126,3 +126,4 @@ dmypy.json
 # other
 *.ipynb
 SentiWS_v2.0/
+.vscode/
