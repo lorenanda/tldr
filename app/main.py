@@ -11,7 +11,16 @@ nlp_de = de_core_news_sm.load()
 
 
 def get_text(link):
-    pass
+    scraped_data = urllib.request.urlopen(link)
+    article = scraped_data.read()
+    parsed_article = bs.BeautifulSoup(article,'lxml')
+    paragraphs = parsed_article.find_all('p')
+    article_text = ""
+
+    for p in paragraphs:
+        article_text += p.text
+    
+    return article_text
 
 
 def preprocess_text(txt):
@@ -86,6 +95,9 @@ def summarize_text(text):
 
 if __name__ == "__main__":
     input_text = preprocess_text("app/texts/example1.txt")
+    url = 'https://www.bundesregierung.de/breg-de/aktuelles/reden/rede-von-bundeskanzlerin-merkel-zum-startschuss-fuer-das-ai-breakthrough-hub-am-17-dezember-2020-videokonferenz--1829778'
+
+    article_text += p.text
     analyse_sentiment(input_text)
     extract_entities(input_text)
     # get_lexical_richness(input_text)
