@@ -1,6 +1,7 @@
 import spacy
 from collections import Counter
 import de_core_news_sm
+
 from textblob_de import TextBlobDE
 
 nlp_de = de_core_news_sm.load()
