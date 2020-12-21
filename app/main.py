@@ -10,6 +10,10 @@ from textblob_de import TextBlobDE
 nlp_de = de_core_news_sm.load()
 
 
+def get_text(link):
+    pass
+
+
 def preprocess_text(txt):
     f = open(txt, "r")
     f_read = f.read()
@@ -22,6 +26,26 @@ def analyse_sentiment(text):
     print("Text Sentiment:", text_polarity)
     print("Text Subjektivität:", text_subjectivity)
 
+
+def extract_entities(text):
+    entities_nr = len(text.ents)
+    print(entities_nr, "Entities in diesem Text.")
+
+    entities_labels = Counter([x.label_ for x in text.ents])
+    print(entities_labels)
+
+    entities_top3 = Counter([x.text for x in text.ents]).most_common(3)
+    print("Die 3 häufigsten Entities:\n", entities_top3)
+
+    entities_list = [(X.text, X.label_) for X in text.ents]
+    print("Entities im Text:\n", entities_list)
+
+
+def get_lexical_richness(text):
+    lex_rich = round(len(set(text))/len(text), 3)
+    print("Lexikalische:", lex_rich)
+
+
 def summarize_text(text):
     article_text = preprocess_text("app/texts/example1.txt")
     article_text = str(article_text)
@@ -32,7 +56,7 @@ def summarize_text(text):
     formatted_article_text = re.sub('[^a-zA-Z]', ' ', article_text )
     formatted_article_text = re.sub(r'\s+', ' ', formatted_article_text)
     sentence_list = nltk.sent_tokenize(article_text)
-    stopwords = nltk.corpus.stopwords.words('english')
+    stopwords = nltk.corpus.stopwords.words('german')
 
     word_frequencies = {}
     for word in nltk.word_tokenize(formatted_article_text):
@@ -58,24 +82,6 @@ def summarize_text(text):
 
     summary = ' '.join(summary_sentences)
     print("Zusammenfassung:\n", summary)
-
-
-def extract_entities(text):
-    entities_nr = len(text.ents)
-    print(entities_nr, "Entities in diesem Text.")
-
-    entities_labels = Counter([x.label_ for x in text.ents])
-    print(entities_labels)
-
-    entities_top3 = Counter([x.text for x in text.ents]).most_common(3)
-    print("Die 3 häufigsten Entities:\n", entities_top3)
-
-    entities_list = [(X.text, X.label_) for X in text.ents]
-    print("Entities im Text:\n", entities_list)
-
-def get_lexical_richness(text):
-    lex_rich = round(len(set(text))/len(text), 3)
-    print("Lexikalische:", lex_rich)
 
 
 if __name__ == "__main__":
