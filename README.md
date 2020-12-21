@@ -1,7 +1,6 @@
-TL;DR
+# TL;DR
 
-A web app that gets the gists of texts.
-
+Program that gets the gist of texts:
 - summary
 - entities
 - sentiment score
