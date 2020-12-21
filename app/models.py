@@ -14,7 +14,7 @@ def preprocess_text(txt):
 
 def analyse_sentiment(text):
     text_polarity = round(TextBlobDE(str(text)).sentiment.polarity, 3)
-    text_subjectivity = round(TextBlobDE(str(satz)).sentiment.subjectivity, 3)
+    text_subjectivity = round(TextBlobDE(str(text)).sentiment.subjectivity, 3)
     print("Text Sentiment:", text_polarity)
     print("Text Subjektivität:", text_subjectivity)
 
