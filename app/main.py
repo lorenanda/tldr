@@ -13,6 +13,9 @@ nlp_de = de_core_news_sm.load()
 
 
 def get_text(link):
+    """Function that scrapes the text in every paragraph
+    from a link to bundesregierung.de website."""
+
     scraped_text = urllib.request.urlopen(link).read()
     soup_text = bs.BeautifulSoup(scraped_text,'lxml')
     paragraphs = soup_text.find_all('p')
@@ -24,6 +27,10 @@ def get_text(link):
 
 
 def preprocess_text(txt):
+    """Function that processes the text
+    from an input text file.
+    """
+
     f = open(txt, "r")
     f_read = f.read()
     text = nlp_de(f_read)
@@ -31,6 +38,9 @@ def preprocess_text(txt):
 
 
 def analyse_sentiment(text):
+    """Function that returns the polarity and subjectivity
+    of a preprocessed scraped text."""
+
     text_polarity = round(TextBlobDE(str(text)).sentiment.polarity, 3)
     text_subjectivity = round(TextBlobDE(str(text)).sentiment.subjectivity, 3)
     print("Text Sentiment:", text_polarity)
@@ -38,6 +48,9 @@ def analyse_sentiment(text):
 
 
 def extract_entities(text):
+    """Function that extracts the entities from a scraped text
+    and returns the count and list of entities."""
+
     text = nlp_de(text)
     entities_nr = len(text.ents)
     print(entities_nr, "Entities in diesem Text.")
@@ -53,24 +66,30 @@ def extract_entities(text):
 
 
 def get_lexical_richness(text):
+    """Function that calculates the lexical richness
+    of a scraped text."""
+
     lex_rich = round(len(set(text))/len(text), 3)
     print("Lexikalische:", lex_rich)
 
 
 def summarize_text(text):
-    article_text = preprocess_text("app/texts/example1.txt")
-    article_text = str(article_text)
+    """Function that preprocesses a scraped text
+    and returns a summary of the text."""
 
-    article_text = re.sub(r'\[[0-9]*\]', ' ', article_text)
-    article_text = re.sub(r'\s+', ' ', article_text)
+    # article_text = preprocess_text("app/texts/example1.txt")
+    # article_text = str(article_text)
 
-    formatted_article_text = re.sub('[^a-zA-Z]', ' ', article_text )
-    formatted_article_text = re.sub(r'\s+', ' ', formatted_article_text)
-    sentence_list = nltk.sent_tokenize(article_text)
+    text = re.sub(r'\[[0-9]*\]', ' ', text)
+    text = re.sub(r'\s+', ' ', text)
+
+    formatted_text = re.sub('[^a-zA-Z]', ' ', text )
+    formatted_text = re.sub(r'\s+', ' ', formatted_text)
+    sentence_list = nltk.sent_tokenize(text)
     stopwords = nltk.corpus.stopwords.words('german')
 
     word_frequencies = {}
-    for word in nltk.word_tokenize(formatted_article_text):
+    for word in nltk.word_tokenize(formatted_text):
         if word not in stopwords:
             if word not in word_frequencies.keys():
                 word_frequencies[word] = 1
@@ -97,7 +116,7 @@ def summarize_text(text):
 
 if __name__ == "__main__":
     # input_text = preprocess_text("app/texts/example1.txt")
-    link = 'https://www.bundesregierung.de/breg-de/aktuelles/reden/rede-von-bundeskanzlerin-merkel-zum-startschuss-fuer-das-ai-breakthrough-hub-am-17-dezember-2020-videokonferenz--1829778'
+    # link = 'https://www.bundesregierung.de/breg-de/aktuelles/reden/rede-von-bundeskanzlerin-merkel-zum-startschuss-fuer-das-ai-breakthrough-hub-am-17-dezember-2020-videokonferenz--1829778'
     input_link = input("Link: ")
     input_text = get_text(input_link)
     analyse_sentiment(input_text)
