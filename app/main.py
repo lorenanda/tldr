@@ -2,6 +2,8 @@ import re
 import nltk
 import heapq
 import spacy
+import bs4 as bs
+import urllib.request
 from collections import Counter
 # python -m spacy download de_core_news_sm
 import de_core_news_sm
@@ -11,15 +13,13 @@ nlp_de = de_core_news_sm.load()
 
 
 def get_text(link):
-    scraped_data = urllib.request.urlopen(link)
-    article = scraped_data.read()
-    parsed_article = bs.BeautifulSoup(article,'lxml')
-    paragraphs = parsed_article.find_all('p')
+    scraped_text = urllib.request.urlopen(link).read()
+    soup_text = bs.BeautifulSoup(scraped_text,'lxml')
+    paragraphs = soup_text.find_all('p')
     article_text = ""
-
     for p in paragraphs:
         article_text += p.text
-    
+    # print(article_text)
     return article_text
 
 
@@ -29,6 +29,7 @@ def preprocess_text(txt):
     text = nlp_de(f_read)
     return text
 
+
 def analyse_sentiment(text):
     text_polarity = round(TextBlobDE(str(text)).sentiment.polarity, 3)
     text_subjectivity = round(TextBlobDE(str(text)).sentiment.subjectivity, 3)
@@ -37,6 +38,7 @@ def analyse_sentiment(text):
 
 
 def extract_entities(text):
+    text = nlp_de(text)
     entities_nr = len(text.ents)
     print(entities_nr, "Entities in diesem Text.")
 
@@ -94,11 +96,11 @@ def summarize_text(text):
 
 
 if __name__ == "__main__":
-    input_text = preprocess_text("app/texts/example1.txt")
-    url = 'https://www.bundesregierung.de/breg-de/aktuelles/reden/rede-von-bundeskanzlerin-merkel-zum-startschuss-fuer-das-ai-breakthrough-hub-am-17-dezember-2020-videokonferenz--1829778'
-
-    article_text += p.text
+    # input_text = preprocess_text("app/texts/example1.txt")
+    link = 'https://www.bundesregierung.de/breg-de/aktuelles/reden/rede-von-bundeskanzlerin-merkel-zum-startschuss-fuer-das-ai-breakthrough-hub-am-17-dezember-2020-videokonferenz--1829778'
+    input_link = input("Link: ")
+    input_text = get_text(input_link)
     analyse_sentiment(input_text)
     extract_entities(input_text)
-    # get_lexical_richness(input_text)
+    get_lexical_richness(input_text)
     summarize_text(input_text)
