@@ -123,3 +123,6 @@ if __name__ == "__main__":
     extract_entities(input_text)
     get_lexical_richness(input_text)
     summarize_text(input_text)
+
+    with open("app/texts/output.txt", "w") as f:
+        f.writelines(input_text)
