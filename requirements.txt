@@ -1,5 +1,5 @@
 beautifulsoup4==4.9.3
-lxml==4.6.2
+lxml>=4.6.3
 nltk==3.5
 spacy==2.3.5
 textblob-de==0.4.3
